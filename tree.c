@@ -4,24 +4,56 @@
 ** File description:
 ** 1/10/2020
 */
+#include <stdio.h>
 
 void my_putchar(char c);
 
-void trunk(int size)
+int trunk(int size)
 {
     int x = 0;
     int y = 0;
 
-    for (int y = 0; y < size; y++) {
-        for (int x = 0; x < size; x++) {
+    for (y; y < size; y++) {
+        for (int i = 0; i < size * 3; i++)
+            my_putchar(' ');
+        for (x; x < size; x++)
             my_putchar('|');
-        }
         my_putchar('\n');
         x = 0;
     }
 }
+int nbLines(size)
+{
+    int result = 0;
+    int cpSizes = 0;
+
+    for (cpSizes; cpSizes != size; cpSizes++)
+        result = result + 4 + cpSizes;
+    return result;
+}
+
+void putSpaces(int size, int range)
+{
+    int space = (size * 3) + (size / 2) - range;
+
+    for (space; 0 < space; space--) {
+            my_putchar(' ');
+    }
+}
+
+void leaves(int size)
+{
+    int lines = nbLines(size);
+
+    for (int i = 0; i < lines; i++) {
+        putSpaces(size, lines);                 //ICI
+    }
+
+    my_putchar('\n');
+}
 
 void tree(int size)
 {
+    leaves(size);
     trunk(size);
 }
