@@ -8,7 +8,7 @@
 
 void my_putchar(char c);
 
-int trunk(int size)
+void trunk(int size)
 {
     int x = 0;
     int y = 0;
@@ -40,52 +40,41 @@ int nbSpacesMAX(int size)
     return result;
 }
 
-void my_putSpace(int spaceVar)
+void my_put_space(int space_var)
 {
-    for (int k = 0; k <= spaceVar; k++) {
+    for (int k = 0; k <= space_var; k++)
         my_putchar(' ');
-    }
-}
-int partSize(int size)
-{
-
 }
 
-void part(int size)
+void my_put_star(int nbr_star)
 {
-    int draw = nbSpacesMAX(size);
-    int spaceVar = draw;
-    int heighMAX = heigh(size);
-    int currentHeigh = 1;
-    int part = 4;
-    int lineReturn = 0;
-    int j = 0;
+    for (int i = 0; i < nbr_star; i += 2)
+        my_putchar('*');
+}
 
-    for (int p = 0; p < size; p++) {
-        j = 0;
-        spaceVar = draw;
-        for (int i = 1; i <= draw; i += 2) {
-            my_putSpace(spaceVar);
-            spaceVar--;
-            for (j; j < i; j++) {
-                my_putchar('*');
-            }
-            j = 0;
-            if (currentHeigh == part) {
-                lineReturn = (3 * size) / (part + 1) + 1;
-                part = (part * 2) + 1;
-                for (int h = 0; h < lineReturn; h++)
-                    spaceVar++;
-                j += lineReturn * 2;
-            }
-            currentHeigh++;
-            my_putchar('\n');
-        }
+void triangle(int rank, int size)
+{
+    int nbr_star = 1;
+    int space = 4 + rank;
+    int i = nbSpacesMAX(size);
+
+    for (space; space > 0; space--) {
+        i = space - rank + nbSpacesMAX(size);
+        my_put_space(i);
+        my_put_star(nbr_star);
+        nbr_star += 4;
+        my_putchar('\n');
     }
+}
+
+int leaves(int size)
+{
+    for (int rank = 0; rank < size; rank++)
+        triangle(rank, size);
 }
 
 void tree(int size)
 {
-    part(size);
+    leaves(size);
     /* trunk(size); */
 }
