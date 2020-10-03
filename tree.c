@@ -22,7 +22,7 @@ int trunk(int size)
         x = 0;
     }
 }
-int nbLines(size)
+int nbLines(int size)
 {
     int result = 0;
     int cpSizes = 0;
@@ -32,12 +32,16 @@ int nbLines(size)
     return result;
 }
 
-void putSpaces(int size, int range)
+void putSpaces(int size, int lines)
 {
-    int space = (size * 3) + (size / 2) - range;
+    int space = (size * 3) + (size / 2);
+            printf("%d\n", space);
 
     for (space; 0 < space; space--) {
-            my_putchar(' ');
+        my_putchar(' ');
+        if (lines > 0) {
+            lines--;
+        }
     }
 }
 
@@ -46,7 +50,7 @@ void leaves(int size)
     int lines = nbLines(size);
 
     for (int i = 0; i < lines; i++) {
-        putSpaces(size, lines);                 //ICI
+        putSpaces(size, lines);               //ICI
     }
 
     my_putchar('\n');
