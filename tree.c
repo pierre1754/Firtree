@@ -23,7 +23,7 @@ int trunk(int size)
     }
 }
 
-int nbLines(int size)
+int heigh(int size)
 {
     int result = 0;
     int cpSizes = 0;
@@ -33,40 +33,59 @@ int nbLines(int size)
     return result;
 }
 
-void putSpace(int actualSpace, int nbSpaces)
+int nbSpacesMAX(int size)
 {
-    if (actualSpace < nbSpaces) {
-        my_putchar(' ');
-        putSpace(actualSpace + 1, nbSpaces);
-    }
+    int result = (4 * size) - size;
+
+    return result;
 }
 
-void leaves(int size, int nbLines)
+void my_putSpace(int spaceVar)
 {
-    int nbSpaces = (size * 3) + (size / 2);
-    int actualSpace = 0;
-    int rankLines = 4;
-    int rankIncr = 1;
-    int part = size;
+    for (int k = 0; k <= spaceVar; k++) {
+        my_putchar(' ');
+    }
+}
+int partSize(int size)
+{
 
-    for (nbLines; nbLines != 0; nbLines--) {
-        putSpace(actualSpace, nbSpaces);
-        my_putchar('*');
-        nbSpaces--;
-        my_putchar('\n');
-        if (rankIncr == rankLines) {
-            if (part != 0) {
-                rankLines = rankLines + (size / part);
-                part--;
-                nbSpaces += 2;
+}
+
+void part(int size)
+{
+    int draw = nbSpacesMAX(size);
+    int spaceVar = draw;
+    int heighMAX = heigh(size);
+    int currentHeigh = 1;
+    int part = 4;
+    int lineReturn = 0;
+    int j = 0;
+
+    for (int p = 0; p < size; p++) {
+        j = 0;
+        spaceVar = draw;
+        for (int i = 1; i <= draw; i += 2) {
+            my_putSpace(spaceVar);
+            spaceVar--;
+            for (j; j < i; j++) {
+                my_putchar('*');
             }
+            j = 0;
+            if (currentHeigh == part) {
+                lineReturn = (3 * size) / (part + 1) + 1;
+                part = (part * 2) + 1;
+                for (int h = 0; h < lineReturn; h++)
+                    spaceVar++;
+                j += lineReturn * 2;
+            }
+            currentHeigh++;
+            my_putchar('\n');
         }
-        rankIncr++;
     }
 }
 
 void tree(int size)
 {
-    leaves(size, nbLines(size));
+    part(size);
     /* trunk(size); */
 }
