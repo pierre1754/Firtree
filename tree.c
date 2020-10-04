@@ -5,23 +5,36 @@
 ** 1/10/2020
 */
 
-#include <stdio.h>
-
 void my_putchar(char c);
+
+int nbspaces_max(int size)
+{
+    int t = 0;
+    int n = 0;
+
+    for (int i = size; i > 0; i--) {
+        n = n + 3 + (t / 2);
+        t++;
+    }
+    return n;
+}
 
 void trunk(int size)
 {
     int x = 0;
     int y = 0;
     int h = 0;
+    int w = nbspaces_max(size);
 
-    if (size % 2 == 0)
-        h--;
+    if (size % 2 == 0) {
+        h++;
+    }
     for (; y < size; y++) {
-        for (int g = 0; g < size * 3 + h; g++)
+        for (int g = 0; g < w - size / 2; g++)
             my_putchar(' ');
-        for (; x < size - h; x++)
+        for (; x < size + h; x++) {
             my_putchar('|');
+        }
         my_putchar('\n');
         x = 0;
     }
@@ -37,14 +50,6 @@ int heigh(int size)
     return result;
 }
 
-int nbspaces_max(int size)
-{
-    int res = size * 3;
-    if (size >= 3)
-        res += size - 2;
-    return res;
-}
-
 void my_put_star(int nbr_star)
 {
     for (int i = 0; i < nbr_star; i++)
@@ -58,7 +63,7 @@ void my_put_space(int space)
     }
 }
 
-void triangle(int part, int size, int *nbr_star, int *space)
+void triangle(int part, int *nbr_star, int *space)
 {
     int rank = 4 + part;
 
@@ -73,24 +78,18 @@ void triangle(int part, int size, int *nbr_star, int *space)
 
 void leaves(int size)
 {
-    int star_in_more = 0;
-    int j = 0;
     int d = 1;
     int part = 0;
     int nbr_star = 1;
     int space = nbspaces_max(size);
-    /* printf("%d\n", space);
-    return ; */
+
     for (part = 0; part < size; part++) {
-        triangle(part, size, &nbr_star, &space);
+        triangle(part, &nbr_star, &space);
         if (part % 2 == 0) {
-            /* d += 2;
-            space += d; */
             d++;
         }
         space += d;
         nbr_star -= d * 2;
-        /* printf("%d\n", d); */
     }
 }
 
