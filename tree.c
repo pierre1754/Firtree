@@ -4,7 +4,6 @@
 ** File description:
 ** 1/10/2020
 */
-#include <stdio.h>
 
 void my_putchar(char c);
 
@@ -16,7 +15,6 @@ void trunk(int size)
 
     if (size % 2 == 0)
         h--;
-
     for (y; y < size; y++) {
         for (int g = 0; g < size * 3 + h; g++)
             my_putchar(' ');
@@ -40,7 +38,6 @@ int heigh(int size)
 int nbspaces_max(int size)
 {
     int result = (4 * size) - size + size / 2;
-    /* printf("%d, ", result); */
     return result;
 }
 
@@ -61,15 +58,14 @@ void my_correction(int rank, int size, int *correction, int *star_in_more)
     int space = 4 + rank;
     int d = 0;
 
-    for (space; space > 0; space--) {
+    for (space; space > 0; space--)
         d = space - rank + nbspaces_max(size) - *star_in_more / 4;
-    }
     if (d != -1) {
         while (d + *correction != -1) {
             if (d < -1)
-                --*correction;
-            else
                 ++*correction;
+            else if (d > -1)
+                --*correction;
         }
     }
 }
@@ -84,7 +80,6 @@ void triangle(int rank, int size, int *star_in_more, int *correction)
 
     for (space; space > 0; space--) {
         i = space - rank + nbspaces_max(size) - *star_in_more / 4 + *correction;
-        printf("%d, ", i);
         my_put_space(i);
         my_put_star(nbr_star);
         my_putchar('\n');
@@ -101,6 +96,7 @@ int leaves(int size)
     int rank = 0;
 
     for (rank; rank < size; rank++) {
+        correction = 0;
         my_correction(rank, size, &correction, &star_in_more);
         star_in_more += part_section;
         if (j == 1) {
