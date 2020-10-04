@@ -14,7 +14,7 @@ void trunk(int size)
     int y = 0;
 
     for (y; y < size; y++) {
-        for (int i = 0; i < size * 3; i++)
+        for (int g = 0; g < size * 3; g++)
             my_putchar(' ');
         for (x; x < size; x++)
             my_putchar('|');
@@ -35,8 +35,8 @@ int heigh(int size)
 
 int nbspaces_max(int size)
 {
-    int result = (4 * size) - size;
-
+    int result = (4 * size) - size + size / 2;
+    /* printf("%d, ", result); */
     return result;
 }
 
@@ -52,41 +52,76 @@ void my_put_star(int nbr_star)
         my_putchar('*');
 }
 
-void triangle(int rank, int size, int *rank_sup)
+void my_correction(int rank, int size, int *correction, int *star_in_more)
 {
-    int nbr_star = 1 + *rank_sup;
     int space = 4 + rank;
-    int i = 0;
-    int h = 0;
-    int position = 0;
+    int d = 0;
 
     for (space; space > 0; space--) {
-        i = space - rank + nbspaces_max(size);
+        d = space - rank + nbspaces_max(size) - *star_in_more / 4;
+    }
+    if (d != -1) {
+        while (d + *correction != -1) {
+            if (d < -1)
+                --*correction;
+            else
+                ++*correction;
+        }
+    }
+    printf("%d, ", d);
+}
+
+void triangle(int rank, int size, int *star_in_more, int *correction)
+{
+    int nbr_star = 1 + *star_in_more;
+    int space = 4 + rank;
+    int cp_space = space;
+    int i = 0;
+    int d = 0;
+
+    for (space; space > 0; space--) {
+        i = space - rank + nbspaces_max(size) - *star_in_more / 4 + *correction;
+        printf("%d, ", i);
         my_put_space(i);
         my_put_star(nbr_star);
         my_putchar('\n');
-        if (h != 0) {
-            nbr_star += 4;
-            h++;
+        nbr_star += 4;
         }
-        if (h == 0) {
-            nbr_star += 4;
-            h++;
-        }
-    }
 }
 
 int leaves(int size)
 {
-    int rank_sup = 0;
-    for (int rank = 0; rank < size; rank++) {
-        triangle(rank, size, &rank_sup);
-        rank_sup += 4;
+    int star_in_more = 0;
+    int part_section = 8;
+    int j = 0;
+    int correction = 0;
+    int rank = 0;
+
+    for (rank; rank < size; rank++) {
+        my_correction(rank, size, &correction, &star_in_more);
+        star_in_more += part_section;
+        if (j == 1) {
+            part_section += 4 ;
+            j = 0;
+        }
+        j++;
+    }
+    j = 0;
+    star_in_more = 0;
+    part_section = 8;
+    for (rank = 0; rank < size; rank++) {
+        triangle(rank, size, &star_in_more, &correction);
+        star_in_more += part_section;
+        if (j == 1) {
+            part_section += 4 ;
+            j = 0;
+        }
+        j++;
     }
 }
 
 void tree(int size)
 {
     leaves(size);
-    /* trunk(size); */
+    trunk(size);
 }
