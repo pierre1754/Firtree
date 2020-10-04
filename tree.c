@@ -33,7 +33,7 @@ int heigh(int size)
     return result;
 }
 
-int nbSpaces_max(int size)
+int nbspaces_max(int size)
 {
     int result = (4 * size) - size;
 
@@ -54,32 +54,34 @@ void my_put_star(int nbr_star)
 
 void triangle(int rank, int size, int *rank_sup)
 {
-    int nbr_star = 1;
+    int nbr_star = 1 + *rank_sup;
     int space = 4 + rank;
     int i = 0;
+    int h = 0;
     int position = 0;
 
     for (space; space > 0; space--) {
-        i = space - rank + nbSpaces_max(size) - position;
+        i = space - rank + nbSpaces_max(size);
         my_put_space(i);
-        position = 0;
-        if (rank <= *rank_sup) {
-            nbr_star += 4;
-            position += 2;
-        }
-        if (rank == 0)
-            nbr_star += 4;
         my_put_star(nbr_star);
         my_putchar('\n');
+        if (h != 0) {
+            nbr_star += 4;
+            h++;
+        }
+        if (h == 0) {
+            nbr_star += 4;
+            h++;
+        }
     }
-}// HEREEEEEEEE
+}
 
 int leaves(int size)
 {
     int rank_sup = 0;
     for (int rank = 0; rank < size; rank++) {
-        rank_sup++;
         triangle(rank, size, &rank_sup);
+        rank_sup += 4;
     }
 }
 
