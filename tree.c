@@ -61,7 +61,7 @@ void triangle(int rank, int size, int *rank_sup)
     int position = 0;
 
     for (space; space > 0; space--) {
-        i = space - rank + nbSpaces_max(size);
+        i = space - rank + nbspaces_max(size);
         my_put_space(i);
         my_put_star(nbr_star);
         my_putchar('\n');
