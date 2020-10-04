@@ -47,61 +47,49 @@ int nbspaces_max(int size)
 
 void my_put_star(int nbr_star)
 {
-    for (int i = 0; i < nbr_star; i += 2)
+    for (int i = 0; i < nbr_star; i++)
         my_putchar('*');
 }
 
-void my_put_space(int space, int rank, int size)
+void my_put_space(int space)
 {
-    for (int k = 0; k <= space - rank; k++) {
+    for (int k = 0; k < space; k++) {
         my_putchar(' ');
     }
 }
 
-void triangle(int part, int size, int *nbr_star, int *d)
+void triangle(int part, int size, int *nbr_star, int *space)
 {
     int rank = 4 + part;
-    int space = nbspaces_max(size);
-    int i = 0;
-
 
     for (; rank > 0; rank--) {
-        space--;
-        if (part != 0 && rank == 4 + part) {
-            if (part <= 4) {
-                space++;
-            }
-            space -= part + part - 1;
-        }
-        my_put_space(space, part, size);
+        my_put_space(*space);
         my_put_star(*nbr_star);
         my_putchar('\n');
-        *nbr_star += 4;
+        --*space;
+        *nbr_star += 2;
     }
 }
 
 void leaves(int size)
 {
     int star_in_more = 0;
-    int part_section = 8;
     int j = 0;
-    int d = 4;
-    int x = 0;
-    int h = 2;
-    int correction = 0;
+    int d = 1;
     int part = 0;
     int nbr_star = 1;
-
+    int space = nbspaces_max(size);
+    /* printf("%d\n", space);
+    return ; */
     for (part = 0; part < size; part++) {
-        triangle(part, size, &nbr_star, &d);
-        nbr_star -= 4;
-        if (j == 2) {
-            d += 4;
-            j = 0;
+        triangle(part, size, &nbr_star, &space);
+        if (part % 2 == 0) {
+            /* d += 2;
+            space += d; */
+            d++;
         }
-        h++;
-        j++;
-        nbr_star = nbr_star - d;
+        space += d;
+        nbr_star -= d * 2;
         /* printf("%d\n", d); */
     }
 }
