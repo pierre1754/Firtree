@@ -12,11 +12,15 @@ void trunk(int size)
 {
     int x = 0;
     int y = 0;
+    int h = 0;
+
+    if (size % 2 == 0)
+        h--;
 
     for (y; y < size; y++) {
-        for (int g = 0; g < size * 3; g++)
+        for (int g = 0; g < size * 3 + h; g++)
             my_putchar(' ');
-        for (x; x < size; x++)
+        for (x; x < size - h; x++)
             my_putchar('|');
         my_putchar('\n');
         x = 0;
@@ -68,7 +72,6 @@ void my_correction(int rank, int size, int *correction, int *star_in_more)
                 ++*correction;
         }
     }
-    printf("%d, ", d);
 }
 
 void triangle(int rank, int size, int *star_in_more, int *correction)
