@@ -95,6 +95,8 @@ void leaves(int size)
 
 void tree(int size)
 {
-    leaves(size);
-    trunk(size);
+    if (size > 0) {
+        leaves(size);
+        trunk(size);
+    }
 }
